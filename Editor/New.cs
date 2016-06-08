@@ -39,23 +39,26 @@ namespace Editor
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(!blankcheck())
-            {
-                WebServiceUrl();
-            }
-            else
-            {
-                MessageBox.Show("Required Field Missing");
-            }
-        }
-        
-        public void getCompany()
-        {
-            Uri serviceUrl = getserviceUrl();
-            company.Items.Clear();
-            company.Text = string.Empty;
             if (!blankcheck())
             {
+                if (string.IsNullOrEmpty(company.SelectedText))
+                {
+                    MessageBox.Show("Select Company", "ERROR!!");
+                }
+                else
+                {
+                    WebServiceUrl();
+                }
+            }
+        }
+
+        public void getCompany()
+        {
+            if (!blankcheck())
+            {
+                Uri serviceUrl = getserviceUrl();
+                company.Items.Clear();
+                company.Text = string.Empty;
                 const string getNavCompany =
                         @"<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' " +
                                 "xmlns:sys='urn:microsoft-dynamics-schemas/nav/system/'>" +
@@ -108,7 +111,8 @@ namespace Editor
                 string.IsNullOrEmpty(password.Text) || string.IsNullOrEmpty(instanceName.Text) ||
                 string.IsNullOrEmpty(soapPort.Text))
             {
-                MessageBox.Show("Please Fill All Values", "ERROR!!");
+
+                MessageBox.Show("Please Fill Required Values", "ERROR!!");
                 return true;
             }
             return false;
