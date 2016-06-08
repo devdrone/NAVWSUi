@@ -142,7 +142,5 @@ namespace Services
             doc.LoadXml(operation.ToString());
             doc.Save(fileName + ".xml");
         }
-
-        
     }
 }
