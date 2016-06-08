@@ -16,5 +16,11 @@ namespace Editor
         {
             InitializeComponent();
         }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            New FormNew = new New();
+            FormNew.Show();
+        }
     }
 }

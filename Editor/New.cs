@@ -19,7 +19,7 @@ namespace Editor
             InitializeComponent();
         }
 
-        private void company_SelectedIndexChanged(object sender, EventArgs e)
+        private void company_DropDown(object sender, EventArgs e)
         {
             try
             {

@@ -30,7 +30,6 @@
         {
             this.label8 = new System.Windows.Forms.Label();
             this.domain = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.company = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -58,22 +57,13 @@
             // 
             this.domain.Location = new System.Drawing.Point(95, 141);
             this.domain.Name = "domain";
-            this.domain.Size = new System.Drawing.Size(262, 20);
+            this.domain.Size = new System.Drawing.Size(183, 20);
             this.domain.TabIndex = 49;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(156, 167);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(136, 23);
-            this.button1.TabIndex = 48;
-            this.button1.Text = "Get Company";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(9, 200);
+            this.label6.Location = new System.Drawing.Point(11, 171);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(84, 13);
             this.label6.TabIndex = 47;
@@ -82,11 +72,11 @@
             // company
             // 
             this.company.FormattingEnabled = true;
-            this.company.Location = new System.Drawing.Point(93, 196);
+            this.company.Location = new System.Drawing.Point(95, 167);
             this.company.Name = "company";
-            this.company.Size = new System.Drawing.Size(262, 21);
+            this.company.Size = new System.Drawing.Size(183, 21);
             this.company.TabIndex = 46;
-            this.company.SelectedIndexChanged += new System.EventHandler(this.company_SelectedIndexChanged);
+            this.company.DropDown += new System.EventHandler(this.company_DropDown);
             // 
             // label5
             // 
@@ -110,14 +100,14 @@
             // 
             this.soapPort.Location = new System.Drawing.Point(95, 115);
             this.soapPort.Name = "soapPort";
-            this.soapPort.Size = new System.Drawing.Size(262, 20);
+            this.soapPort.Size = new System.Drawing.Size(183, 20);
             this.soapPort.TabIndex = 43;
             // 
             // instanceName
             // 
             this.instanceName.Location = new System.Drawing.Point(95, 89);
             this.instanceName.Name = "instanceName";
-            this.instanceName.Size = new System.Drawing.Size(262, 20);
+            this.instanceName.Size = new System.Drawing.Size(183, 20);
             this.instanceName.TabIndex = 42;
             // 
             // label3
@@ -151,31 +141,30 @@
             // 
             this.password.Location = new System.Drawing.Point(95, 63);
             this.password.Name = "password";
-            this.password.Size = new System.Drawing.Size(262, 20);
+            this.password.Size = new System.Drawing.Size(183, 20);
             this.password.TabIndex = 38;
             // 
             // userName
             // 
             this.userName.Location = new System.Drawing.Point(95, 37);
             this.userName.Name = "userName";
-            this.userName.Size = new System.Drawing.Size(262, 20);
+            this.userName.Size = new System.Drawing.Size(183, 20);
             this.userName.TabIndex = 37;
             // 
             // serverName
             // 
             this.serverName.Location = new System.Drawing.Point(95, 11);
             this.serverName.Name = "serverName";
-            this.serverName.Size = new System.Drawing.Size(262, 20);
+            this.serverName.Size = new System.Drawing.Size(183, 20);
             this.serverName.TabIndex = 36;
             // 
             // New
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(405, 261);
+            this.ClientSize = new System.Drawing.Size(367, 242);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.domain);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.company);
             this.Controls.Add(this.label5);
@@ -203,7 +192,6 @@
 
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox domain;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox company;
         private System.Windows.Forms.Label label5;
