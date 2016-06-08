@@ -140,7 +140,7 @@ namespace Services
             operation.Add(URL);
             operation.Add(ns);
             doc.LoadXml(operation.ToString());
-            doc.Save(fileName + ".xml");
+            doc.Save(fileName + ".navwsui");
         }
     }
 }

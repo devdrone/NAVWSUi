@@ -11,6 +11,7 @@ using System.Xml.Linq;
 using System.Net;
 using Request;
 using Services;
+using Utility;
 using System.Xml;
 
 namespace Editor
@@ -19,6 +20,7 @@ namespace Editor
     {
         Request.WebRequest WEB = new Request.WebRequest();
         WebService navWs = new WebService();
+        Save SaveCred = new Save();
 
         public New()
         {
@@ -41,15 +43,22 @@ namespace Editor
         {
             if (!blankcheck())
             {
-                if (string.IsNullOrEmpty(company.SelectedText))
+                if (string.IsNullOrEmpty(company.Text))
                 {
                     MessageBox.Show("Select Company", "ERROR!!");
                 }
                 else
                 {
                     WebServiceUrl();
+                    Close();
+                    SaveCred.StoreCredentials(serverName.Text, userName.Text, password.Text, instanceName.Text, soapPort.Text, domain.Text, company.Text);
                 }
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Close();
         }
 
         public void getCompany()
@@ -111,7 +120,6 @@ namespace Editor
                 string.IsNullOrEmpty(password.Text) || string.IsNullOrEmpty(instanceName.Text) ||
                 string.IsNullOrEmpty(soapPort.Text))
             {
-
                 MessageBox.Show("Please Fill Required Values", "ERROR!!");
                 return true;
             }
@@ -121,6 +129,8 @@ namespace Editor
         public void WebServiceUrl()
         {
             string GeneralURL = string.Empty;
+            string CompanyUrl = company.Text.Replace(" ", "%20");
+            GeneralURL = string.Format("http://{0}:{1}/{2}/WS/{3}", serverName.Text, soapPort.Text, instanceName.Text, CompanyUrl);
             XmlDocument doc = new XmlDocument();
             string serviceUrl = string.Format("{0}/{1}", GeneralURL, "Services");
             XElement root = new XElement("Root",
