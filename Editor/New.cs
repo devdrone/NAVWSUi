@@ -50,8 +50,8 @@ namespace Editor
                 else
                 {
                     WebServiceUrl();
-                    Close();
                     SaveCred.StoreCredentials(serverName.Text, userName.Text, password.Text, instanceName.Text, soapPort.Text, domain.Text, company.Text);
+                    Close();
                 }
             }
         }
@@ -59,6 +59,16 @@ namespace Editor
         private void button2_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(SaveCred.SaveCredentials())
+            {
+                MessageBox.Show("Project Not Saved", "NAVWSUi",MessageBoxButtons.OKCancel);
+                e.Cancel = true;
+            }
+            
         }
 
         public void getCompany()

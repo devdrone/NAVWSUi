@@ -22,5 +22,10 @@ namespace Editor
             New FormNew = new New();
             FormNew.Show();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
