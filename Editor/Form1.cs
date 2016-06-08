@@ -19,8 +19,8 @@ namespace Editor
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            New newForm = new New();
-            newForm.Show();
+            New FormNew = new New();
+            FormNew.Show();
         }
     }
 }

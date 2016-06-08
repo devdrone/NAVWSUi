@@ -9,17 +9,23 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Net;
+using Request;
+using Services;
+using System.Xml;
 
 namespace Editor
 {
     public partial class New : Form
     {
+        Request.WebRequest WEB = new Request.WebRequest();
+        WebService navWs = new WebService();
+
         public New()
         {
             InitializeComponent();
         }
 
-        private void company_SelectedIndexChange(object sender, EventArgs e)
+        private void company_DropDown(object sender, EventArgs e)
         {
             try
             {
@@ -28,6 +34,18 @@ namespace Editor
             catch (WebException ex)
             {
                 MessageBox.Show(ex.Message, "ERROR!!");
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if(!blankcheck())
+            {
+                WebServiceUrl();
+            }
+            else
+            {
+                MessageBox.Show("Required Field Missing");
             }
         }
         
@@ -66,7 +84,6 @@ namespace Editor
                 {
                     foreach (var Company in result.Descendants(nsSys + "return_value"))
                     {
-                        var count = 0;
                         company.Items.Add(Company.Value);
                     }
 
@@ -95,6 +112,27 @@ namespace Editor
                 return true;
             }
             return false;
+        }
+
+        public void WebServiceUrl()
+        {
+            string GeneralURL = string.Empty;
+            XmlDocument doc = new XmlDocument();
+            string serviceUrl = string.Format("{0}/{1}", GeneralURL, "Services");
+            XElement root = new XElement("Root",
+                new XElement("operations"));
+            var Urls = XElement.Parse(WEB.Resopnse(serviceUrl));
+            foreach (XElement url in Urls.Elements())
+            {
+                var webserviceURL = url.Attribute("ref").Value;
+                if (!webserviceURL.Contains("/WS/SystemService"))
+                {
+                    int pos = webserviceURL.LastIndexOf("/") + 1;
+                    var FileName = webserviceURL.Substring(pos, webserviceURL.Length - pos);
+                    var WebService = WEB.Resopnse(webserviceURL);
+                    navWs.WebServiceReader(WebService, FileName);
+                }
+            }
         }
     }
 }
