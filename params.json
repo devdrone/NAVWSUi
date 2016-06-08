@@ -1,0 +1,6 @@
+{
+  "name": "NAV WS Ui",
+  "tagline": "",
+  "body": "### Welcome to NAV WS Ui.\r\nThe main functionality of this project is to read the Microsoft Dynamics Navision's webservices and create operations based on that. Users can read and write data to and from Dynamics Navision using this.\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
