@@ -11,7 +11,7 @@ namespace Utility
 
     public class Save
     {
-        public string[] credentials { get; private set; }
+        public string[] credentials;
         public void StoreCredentials(string server, string user, string pass, string instanc, string port, string domain, string company)
         {
             credentials = new string[7];
