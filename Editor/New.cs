@@ -61,15 +61,7 @@ namespace Editor
             Close();
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if(SaveCred.SaveCredentials())
-            {
-                MessageBox.Show("Project Not Saved", "NAVWSUi",MessageBoxButtons.OKCancel);
-                e.Cancel = true;
-            }
-            
-        }
+        
 
         public void getCompany()
         {
@@ -157,6 +149,11 @@ namespace Editor
                     navWs.WebServiceReader(WebService, FileName);
                 }
             }
+        }
+
+        public void SaveInitialLogin()
+        {
+            SaveCred.StoreCredentials(serverName.Text, userName.Text, password.Text, instanceName.Text, soapPort.Text, domain.Text, company.Text);
         }
     }
 }
