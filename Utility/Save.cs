@@ -11,28 +11,7 @@ namespace Utility
 
     public class Save
     {
-        public string[] credentials;
-        public void StoreCredentials(string server, string user, string pass, string instanc, string port, string domain, string company)
-        {
-            credentials = new string[7];
-            if (!string.IsNullOrEmpty(server) && !string.IsNullOrEmpty(user) && !string.IsNullOrEmpty(instanc) && !string.IsNullOrEmpty(port)
-                && !string.IsNullOrEmpty(pass) && !string.IsNullOrEmpty(company))
-            {
-                credentials[0] = server;
-                credentials[1] = user;
-                credentials[2] = pass;
-                credentials[3] = instanc;
-                credentials[4] = port;
-                credentials[5] = domain;
-                credentials[6] = company;
-            }
-            else
-            {
-                credentials = null;
-            }
-        }
-
-        public bool SaveCredentials()
+        public bool SaveCredentials(string[] credentials)
         {
             if(credentials==null)
             {

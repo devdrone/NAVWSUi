@@ -11,7 +11,6 @@ using System.Xml.Linq;
 using System.Net;
 using Request;
 using Services;
-using Utility;
 using System.Xml;
 
 namespace Editor
@@ -20,7 +19,6 @@ namespace Editor
     {
         Request.WebRequest WEB = new Request.WebRequest();
         WebService navWs = new WebService();
-        Save SaveCred = new Save();
 
         public New()
         {
@@ -50,7 +48,7 @@ namespace Editor
                 else
                 {
                     WebServiceUrl();
-                    SaveCred.StoreCredentials(serverName.Text, userName.Text, password.Text, instanceName.Text, soapPort.Text, domain.Text, company.Text);
+                    SaveToFile();
                     Close();
                 }
             }
@@ -61,7 +59,7 @@ namespace Editor
             Close();
         }
 
-        
+
 
         public void getCompany()
         {
@@ -151,9 +149,29 @@ namespace Editor
             }
         }
 
-        public void SaveInitialLogin()
+        private void button3_Click(object sender, EventArgs e)
         {
-            SaveCred.StoreCredentials(serverName.Text, userName.Text, password.Text, instanceName.Text, soapPort.Text, domain.Text, company.Text);
+            FolderBrowserDialog folder = new FolderBrowserDialog();
+            folder.ShowNewFolderButton = true;
+            if (folder.ShowDialog() == DialogResult.OK)
+            {
+                location.Text = folder.SelectedPath;
+            }
+        }
+
+        public void SaveToFile()
+        {
+            var credential = new XElement("Credentials",
+                new XElement("Server", serverName.Text),
+                new XElement("UserName", userName.Text),
+                new XElement("password", password.Text),
+                new XElement("instance", instanceName.Text),
+                new XElement("port", soapPort.Text),
+                new XElement("domain", domain.Text),
+                new XElement("company", company.Text));
+
+            credential.Save(location.Text +"\\"+ ProjName.Text + ".credentials");
         }
     }
 }
+
