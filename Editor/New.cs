@@ -59,8 +59,16 @@ namespace Editor
             Close();
         }
 
-
-
+        private void button3_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folder = new FolderBrowserDialog();
+            folder.ShowNewFolderButton = true;
+            if (folder.ShowDialog() == DialogResult.OK)
+            {
+                location.Text = folder.SelectedPath;
+            }
+        }
+        // To get the list of companies available in Navision.
         public void getCompany()
         {
             if (!blankcheck())
@@ -102,7 +110,7 @@ namespace Editor
                 }
             }
         }
-
+        // Creates the Service URL to get all the available webservices
         public Uri getserviceUrl()
         {
             var uri = new UriBuilder();
@@ -113,19 +121,19 @@ namespace Editor
             uri.Path = strPath;
             return uri.Uri;
         }
-
+        // Blank check of required fields
         public bool blankcheck()
         {
             if (string.IsNullOrEmpty(serverName.Text) || string.IsNullOrEmpty(userName.Text) ||
                 string.IsNullOrEmpty(password.Text) || string.IsNullOrEmpty(instanceName.Text) ||
-                string.IsNullOrEmpty(soapPort.Text))
+                string.IsNullOrEmpty(soapPort.Text) || string.IsNullOrEmpty(ProjName.Text))
             {
                 MessageBox.Show("Please Fill Required Values", "ERROR!!");
                 return true;
             }
             return false;
         }
-
+        // Loads each webservice URL available and creating the corresponding operations file
         public void WebServiceUrl()
         {
             string GeneralURL = string.Empty;
@@ -143,22 +151,13 @@ namespace Editor
                 {
                     int pos = webserviceURL.LastIndexOf("/") + 1;
                     var FileName = webserviceURL.Substring(pos, webserviceURL.Length - pos);
+                    string filelocation = location.Text + "\\" + FileName;
                     var WebService = WEB.Resopnse(webserviceURL);
-                    navWs.WebServiceReader(WebService, FileName);
+                    navWs.WebServiceReader(WebService, filelocation);
                 }
             }
         }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog folder = new FolderBrowserDialog();
-            folder.ShowNewFolderButton = true;
-            if (folder.ShowDialog() == DialogResult.OK)
-            {
-                location.Text = folder.SelectedPath;
-            }
-        }
-
+        // Save the credentials to a file for future use.
         public void SaveToFile()
         {
             var credential = new XElement("Credentials",
