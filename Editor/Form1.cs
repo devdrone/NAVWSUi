@@ -7,11 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Linq;
+using Request;
+using Services;
 
 namespace Editor
 {
     public partial class Form1 : Form
     {
+        New FormNew = new New();
         public Form1()
         {
             InitializeComponent();
@@ -19,21 +24,13 @@ namespace Editor
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            New FormNew = new New();
             FormNew.Show();
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void FormNew_Deactivate(object sender, EventArgs e)
         {
-            
-            //if (!save.SaveCredentials())
-            //{
-            //    if (MessageBox.Show("Save Before Closing !!!!", "NAVWSUi - Save", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            //    {
-            //        save.SaveToFile();
-            //    }
-            //}
-
+            FormNew.LoadServices(treeView1,progressBar1);
+            progressBar1.Visible = false;
         }
     }
 }

@@ -19,9 +19,18 @@ namespace Editor
     {
         Request.WebRequest WEB = new Request.WebRequest();
         WebService navWs = new WebService();
+        string GeneralURL = string.Empty;
 
         public New()
         {
+            InitializeComponent();
+        }
+
+        private Form1 mainform;
+        public New(Form callingForm)
+        {
+            mainform = callingForm as Form1;
+
             InitializeComponent();
         }
 
@@ -49,7 +58,7 @@ namespace Editor
                 {
                     WebServiceUrl();
                     SaveToFile();
-                    Close();
+                    Hide();
                 }
             }
         }
@@ -136,7 +145,6 @@ namespace Editor
         // Loads each webservice URL available and creating the corresponding operations file
         public void WebServiceUrl()
         {
-            string GeneralURL = string.Empty;
             string CompanyUrl = company.Text.Replace(" ", "%20");
             GeneralURL = string.Format("http://{0}:{1}/{2}/WS/{3}", serverName.Text, soapPort.Text, instanceName.Text, CompanyUrl);
             XmlDocument doc = new XmlDocument();
@@ -167,9 +175,54 @@ namespace Editor
                 new XElement("instance", instanceName.Text),
                 new XElement("port", soapPort.Text),
                 new XElement("domain", domain.Text),
-                new XElement("company", company.Text));
+                new XElement("company", company.Text),
+                new XElement("URL", GeneralURL));
 
-            credential.Save(location.Text +"\\"+ ProjName.Text + ".credentials");
+            credential.Save(location.Text + "\\" + ProjName.Text + ".credentials");
+        }
+
+        public string GetCredentialFile()
+        {
+            string Destination = location.Text + "\\" + ProjName.Text + ".credentials";
+            return Destination;
+        }
+
+        public TreeView LoadServices(TreeView treeViewMain, ProgressBar progressbarMain)
+        {
+            if (!string.IsNullOrEmpty(serverName.Text) && !string.IsNullOrEmpty(userName.Text) &&
+                !string.IsNullOrEmpty(password.Text) && !string.IsNullOrEmpty(instanceName.Text) &&
+                !string.IsNullOrEmpty(soapPort.Text) && !string.IsNullOrEmpty(ProjName.Text))
+            {
+                try
+                {
+                    progressbarMain.Visible = true;
+                    XmlDocument doc = new XmlDocument();
+                    TreeNode node = treeViewMain.Nodes.Add(ProjName.Text);
+                    List<string> services = new List<string>();
+                    doc.Load(location.Text + "\\" + ProjName.Text + ".credentials");
+                    var credentials = XElement.Parse(doc.InnerXml);
+                    var serviceUrl = string.Format("{0}/{1}", credentials.Element("URL").Value, "Services");
+                    Request.WebRequest WEB = new Request.WebRequest();
+                    WebService navWs = new WebService();
+                    var Urls = XElement.Parse(WEB.Resopnse(serviceUrl));
+                    progressbarMain.Minimum = 0;
+                    progressbarMain.Maximum = Urls.Elements().Count();
+                    foreach (XElement url in Urls.Elements())
+                    {
+                        var webserviceURL = url.Attribute("ref").Value;
+                        if (!webserviceURL.Contains("/SystemService"))
+                        {
+                            int pos = webserviceURL.LastIndexOf("/") + 1;
+                            var FileName = webserviceURL.Substring(pos, webserviceURL.Length - pos);
+                            node.Nodes.Add(FileName);
+                            progressbarMain.Increment(1);
+                        }
+                    }
+                    return treeViewMain;
+                }
+                catch { return treeViewMain; }
+            }
+            return treeViewMain;
         }
     }
 }
