@@ -109,6 +109,7 @@
             this.soapPort.Name = "soapPort";
             this.soapPort.Size = new System.Drawing.Size(183, 20);
             this.soapPort.TabIndex = 43;
+            this.soapPort.Text = "7047";
             // 
             // instanceName
             // 
@@ -116,6 +117,7 @@
             this.instanceName.Name = "instanceName";
             this.instanceName.Size = new System.Drawing.Size(183, 20);
             this.instanceName.TabIndex = 42;
+            this.instanceName.Text = "dynamicsnav70";
             // 
             // label3
             // 
@@ -151,6 +153,7 @@
             this.password.PasswordChar = '*';
             this.password.Size = new System.Drawing.Size(183, 20);
             this.password.TabIndex = 38;
+            this.password.Text = "devdrone";
             this.password.UseSystemPasswordChar = true;
             // 
             // userName
@@ -159,6 +162,7 @@
             this.userName.Name = "userName";
             this.userName.Size = new System.Drawing.Size(183, 20);
             this.userName.TabIndex = 37;
+            this.userName.Text = "devdrone";
             // 
             // serverName
             // 
@@ -166,6 +170,7 @@
             this.serverName.Name = "serverName";
             this.serverName.Size = new System.Drawing.Size(183, 20);
             this.serverName.TabIndex = 36;
+            this.serverName.Text = "localhost";
             // 
             // button1
             // 
@@ -202,6 +207,7 @@
             this.ProjName.Name = "ProjName";
             this.ProjName.Size = new System.Drawing.Size(183, 20);
             this.ProjName.TabIndex = 54;
+            this.ProjName.Text = "devdrone";
             // 
             // label9
             // 
@@ -218,6 +224,7 @@
             this.location.Name = "location";
             this.location.Size = new System.Drawing.Size(183, 20);
             this.location.TabIndex = 56;
+            this.location.Text = "C:\\Users\\devdrone\\Documents\\Graphics";
             // 
             // button3
             // 

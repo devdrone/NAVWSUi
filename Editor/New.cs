@@ -196,11 +196,12 @@ namespace Editor
                 try
                 {
                     progressbarMain.Visible = true;
-                    XmlDocument doc = new XmlDocument();
-                    TreeNode node = treeViewMain.Nodes.Add(ProjName.Text);
+                    XmlDocument credentialDoc = new XmlDocument();
+                    XmlDocument serviceDoc = new XmlDocument();
+                    TreeNode MainNode = treeViewMain.Nodes.Add(ProjName.Text);
                     List<string> services = new List<string>();
-                    doc.Load(location.Text + "\\" + ProjName.Text + ".credentials");
-                    var credentials = XElement.Parse(doc.InnerXml);
+                    credentialDoc.Load(location.Text + "\\" + ProjName.Text + ".credentials");
+                    var credentials = XElement.Parse(credentialDoc.InnerXml);
                     var serviceUrl = string.Format("{0}/{1}", credentials.Element("URL").Value, "Services");
                     Request.WebRequest WEB = new Request.WebRequest();
                     WebService navWs = new WebService();
@@ -212,11 +213,21 @@ namespace Editor
                         var webserviceURL = url.Attribute("ref").Value;
                         if (!webserviceURL.Contains("/SystemService"))
                         {
+                            TreeNode ServiceNode = new TreeNode();    
                             int pos = webserviceURL.LastIndexOf("/") + 1;
                             var FileName = webserviceURL.Substring(pos, webserviceURL.Length - pos);
-                            node.Nodes.Add(FileName);
-                            progressbarMain.Increment(1);
+                            ServiceNode.Text = FileName;
+                            serviceDoc.Load(location.Text + "\\" + FileName + ".navwsui");
+                            var serviceFiles = XElement.Parse(serviceDoc.InnerXml);
+                            foreach (var serviceFile in serviceFiles.Elements())
+                            {
+                                TreeNode OperationNode = new TreeNode();
+                                OperationNode.Text = serviceFile.Name.LocalName;
+                                ServiceNode.Nodes.Add(OperationNode);
+                            }
+                            MainNode.Nodes.Add(ServiceNode);
                         }
+                        progressbarMain.Increment(1);
                     }
                     return treeViewMain;
                 }

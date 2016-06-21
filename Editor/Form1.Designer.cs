@@ -87,16 +87,18 @@
             // 
             // treeView1
             // 
-            this.treeView1.Location = new System.Drawing.Point(12, 27);
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.treeView1.Location = new System.Drawing.Point(0, 24);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(168, 446);
+            this.treeView1.Size = new System.Drawing.Size(168, 457);
             this.treeView1.TabIndex = 2;
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 450);
+            this.progressBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.progressBar1.Location = new System.Drawing.Point(168, 458);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(168, 23);
+            this.progressBar1.Size = new System.Drawing.Size(1051, 23);
             this.progressBar1.TabIndex = 3;
             this.progressBar1.Visible = false;
             // 
