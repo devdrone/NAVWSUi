@@ -12,6 +12,7 @@ using System.Net;
 using Request;
 using Services;
 using System.Xml;
+using System.IO;
 
 namespace Editor
 {
@@ -145,6 +146,7 @@ namespace Editor
         // Loads each webservice URL available and creating the corresponding operations file
         public void WebServiceUrl()
         {
+            Directory.CreateDirectory(location.Text + "\\" + ProjName.Text);
             string CompanyUrl = company.Text.Replace(" ", "%20");
             GeneralURL = string.Format("http://{0}:{1}/{2}/WS/{3}", serverName.Text, soapPort.Text, instanceName.Text, CompanyUrl);
             XmlDocument doc = new XmlDocument();
@@ -159,7 +161,7 @@ namespace Editor
                 {
                     int pos = webserviceURL.LastIndexOf("/") + 1;
                     var FileName = webserviceURL.Substring(pos, webserviceURL.Length - pos);
-                    string filelocation = location.Text + "\\" + FileName;
+                    string filelocation = location.Text + "\\" + ProjName.Text + "\\" + FileName;
                     var WebService = WEB.Resopnse(webserviceURL);
                     navWs.WebServiceReader(WebService, filelocation);
                 }
@@ -178,7 +180,7 @@ namespace Editor
                 new XElement("company", company.Text),
                 new XElement("URL", GeneralURL));
 
-            credential.Save(location.Text + "\\" + ProjName.Text + ".credentials");
+            credential.Save(location.Text + "\\" + ProjName.Text + "\\" + ProjName.Text + ".credentials");
         }
 
         public string GetCredentialFile()
@@ -213,7 +215,7 @@ namespace Editor
                         var webserviceURL = url.Attribute("ref").Value;
                         if (!webserviceURL.Contains("/SystemService"))
                         {
-                            TreeNode ServiceNode = new TreeNode();    
+                            TreeNode ServiceNode = new TreeNode();
                             int pos = webserviceURL.LastIndexOf("/") + 1;
                             var FileName = webserviceURL.Substring(pos, webserviceURL.Length - pos);
                             ServiceNode.Text = FileName;
@@ -234,6 +236,12 @@ namespace Editor
                 catch { return treeViewMain; }
             }
             return treeViewMain;
+        }
+
+        public string Location()
+        {
+            string path = location.Text + "\\" + ProjName.Text;
+            return path;
         }
     }
 }
