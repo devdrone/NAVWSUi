@@ -41,7 +41,6 @@ namespace Request
             request.ContentLength = bytesToWrite.Length;
             request.Headers.Add(header);
             request.UseDefaultCredentials = true;
-            //request.Credentials = new NetworkCredential("devdrone", "devdrone");
             request.ContentType = "text/xml; charset=utf-8";
 
             Stream newStream = request.GetRequestStream();
