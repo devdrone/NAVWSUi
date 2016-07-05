@@ -18,13 +18,13 @@ namespace Editor
     public partial class Form1 : Form
     {
         string soapAction = string.Empty;
-        
+
         string URL = string.Empty;
-        
+
         New FormNew = new New();
-        
+
         SOAPBuilder soap = new SOAPBuilder();
-        
+
         public Form1()
         {
             InitializeComponent();
@@ -38,16 +38,16 @@ namespace Editor
         private void FormNew_Deactivate(object sender, EventArgs e)
         {
             FormNew.LoadServices(treeView1, progressBar1);
-            
+
             progressBar1.Visible = false;
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openfile = new OpenFileDialog();
-            
+
             openfile.Filter = "credentials files (*.credentials)|*.credentials";
-            
+
             DialogResult result = openfile.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -61,47 +61,54 @@ namespace Editor
 
         private void treeView1_NodeMouseDoubleClick(object sender, EventArgs e)
         {
-            LoadRequest(treeView1.SelectedNode.Parent.Text,treeView1.SelectedNode.Text);
+            if (treeView1.SelectedNode.FirstNode != null)
+            {
+                treeView1.SelectedNode.Expand();
+            }
+            else
+            {
+                LoadRequest(treeView1.SelectedNode.Parent.Text, treeView1.SelectedNode.Text);
+            }
         }
 
-        private void SubmitButton_Click(object sender,EventArgs e)
+        private void SubmitButton_Click(object sender, EventArgs e)
         {
             LoadResponse();
         }
 
-        public void LoadRequest(String fileName,string operation)
+        public void LoadRequest(String fileName, string operation)
         {
             string path = FormNew.Path();
 
             XmlDocument doc = new XmlDocument();
-            
+
             doc.Load(path + "\\" + fileName + ".navwsui");
-            
+
             var OperationFile = XElement.Parse(doc.InnerXml);
-            
+
             XNamespace ns = OperationFile.GetNamespaceOfPrefix("ins").NamespaceName;
-            
+
             soapAction = OperationFile.Element(ns + operation).Element("soapAction").Value;
             OperationFile.Element(ns + operation).Element("soapAction").Remove();
             URL = OperationFile.Element("URL").Value;
-            
+
             XElement soapBody = OperationFile.Element(ns + operation);
             var request = soap.sopaBody(ns, soapBody).ToString();
-            
+
             RequestBox.Text = request;
         }
 
         public void LoadResponse()
         {
             WebRequest req = new WebRequest();
-            
+
             try
             {
                 ResponseBox.Text = req.Request(RequestBox.Text, soapAction, URL).ToString();
-            
+
                 tabControl1.SelectedTab = ResponseTab;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "ERROR!!!", MessageBoxButtons.OK);
             }
