@@ -12,13 +12,16 @@ using System.Xml.Linq;
 using Request;
 using Services;
 using System.IO;
+using System.Diagnostics;
 
 namespace Editor
 {
     public partial class Form1 : Form
     {
         string soapAction = string.Empty;
-
+        EventLog log = new EventLog();
+        
+        
         string URL = string.Empty;
 
         New FormNew = new New();
@@ -113,6 +116,5 @@ namespace Editor
                 MessageBox.Show(ex.Message, "ERROR!!!", MessageBoxButtons.OK);
             }
         }
-
     }
 }

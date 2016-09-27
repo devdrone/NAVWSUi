@@ -245,7 +245,7 @@ namespace Editor
                             var FileName = webserviceURL.Substring(pos, webserviceURL.Length - pos);
 
                             ServiceNode.Text = FileName;
-                            serviceDoc.Load(location.Text + "\\" + FileName + "\\" + ProjName.Text + ".navwsui");
+                            serviceDoc.Load(location.Text + "\\" + ProjName.Text + "\\" + FileName + ".navwsui");
 
                             var serviceFiles = XElement.Parse(serviceDoc.InnerXml);
                             foreach (var serviceFile in serviceFiles.Elements())
@@ -267,7 +267,7 @@ namespace Editor
 
         public string Path()
         {
-            string path = location.Text + "\\" + ProjName.Text + "\\" + ProjName.Text;
+            string path = location.Text + "\\" + ProjName.Text;
             return path;
         }
     }

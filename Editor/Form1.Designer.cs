@@ -105,16 +105,16 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Left;
             this.treeView1.Location = new System.Drawing.Point(0, 24);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(200, 480);
+            this.treeView1.Size = new System.Drawing.Size(200, 457);
             this.treeView1.TabIndex = 2;
             this.treeView1.NodeMouseDoubleClick+=treeView1_NodeMouseDoubleClick;
             // 
             // progressBar1
             // 
             this.progressBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressBar1.Location = new System.Drawing.Point(133, 471);
+            this.progressBar1.Location = new System.Drawing.Point(200, 471);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(882, 10);
+            this.progressBar1.Size = new System.Drawing.Size(815, 10);
             this.progressBar1.TabIndex = 3;
             this.progressBar1.Visible = false;
             // 
@@ -123,10 +123,10 @@
             this.tabControl1.Controls.Add(this.RequestTab);
             this.tabControl1.Controls.Add(this.ResponseTab);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(133, 24);
+            this.tabControl1.Location = new System.Drawing.Point(200, 24);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(882, 447);
+            this.tabControl1.Size = new System.Drawing.Size(815, 447);
             this.tabControl1.TabIndex = 4;
             // 
             // RequestTab
@@ -136,7 +136,7 @@
             this.RequestTab.Location = new System.Drawing.Point(4, 22);
             this.RequestTab.Name = "RequestTab";
             this.RequestTab.Padding = new System.Windows.Forms.Padding(3);
-            this.RequestTab.Size = new System.Drawing.Size(874, 421);
+            this.RequestTab.Size = new System.Drawing.Size(807, 421);
             this.RequestTab.TabIndex = 0;
             this.RequestTab.Text = "Request";
             this.RequestTab.UseVisualStyleBackColor = true;
@@ -163,6 +163,7 @@
             this.RequestBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.RequestBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.RequestBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.RequestBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.RequestBox.IsReplaceMode = false;
             this.RequestBox.Language = FastColoredTextBoxNS.Language.XML;
             this.RequestBox.LeftBracket = '<';
@@ -174,7 +175,7 @@
             this.RequestBox.RightBracket2 = ')';
             this.RequestBox.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.RequestBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("RequestBox.ServiceColors")));
-            this.RequestBox.Size = new System.Drawing.Size(868, 415);
+            this.RequestBox.Size = new System.Drawing.Size(801, 415);
             this.RequestBox.TabIndex = 0;
             this.RequestBox.WordWrap = true;
             this.RequestBox.Zoom = 100;
@@ -212,7 +213,6 @@
             this.ResponseBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.ResponseBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.ResponseBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ResponseBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.ResponseBox.IsReplaceMode = false;
             this.ResponseBox.Language = FastColoredTextBoxNS.Language.XML;
             this.ResponseBox.LeftBracket = '<';
