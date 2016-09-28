@@ -263,7 +263,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ResponseBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-            this.FormNew.Deactivate+=FormNew_Deactivate;
+            //this.FormNew.Deactivate+=FormNew_Deactivate;
         }
 
         #endregion

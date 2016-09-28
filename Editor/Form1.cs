@@ -35,13 +35,11 @@ namespace Editor
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormNew.Show();
-        }
-
-        private void FormNew_Deactivate(object sender, EventArgs e)
-        {
-            FormNew.LoadServices(treeView1, progressBar1);
-
+            var dialogResult = FormNew.ShowDialog();
+            if(dialogResult == System.Windows.Forms.DialogResult.OK)
+            {
+                FormNew.LoadServices(treeView1, progressBar1);
+            }
             progressBar1.Visible = false;
         }
 

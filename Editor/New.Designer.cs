@@ -174,6 +174,7 @@
             // 
             // button1
             // 
+            this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.button1.Location = new System.Drawing.Point(105, 248);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(87, 23);
@@ -184,6 +185,7 @@
             // 
             // button2
             // 
+            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button2.Location = new System.Drawing.Point(198, 248);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(90, 23);
@@ -238,8 +240,10 @@
             // 
             // New
             // 
+            this.AcceptButton = this.button1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.button2;
             this.ClientSize = new System.Drawing.Size(301, 284);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.location);
@@ -262,6 +266,7 @@
             this.Controls.Add(this.password);
             this.Controls.Add(this.userName);
             this.Controls.Add(this.serverName);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "New";
