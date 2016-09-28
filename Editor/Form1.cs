@@ -109,7 +109,7 @@ namespace Editor
 
                 tabControl1.SelectedTab = ResponseTab;
             }
-            catch (Exception ex)
+            catch (Microsoft.Dynamics.Nav.Types.Exceptions.NavCSideException ex)
             {
                 MessageBox.Show(ex.Message, "ERROR!!!", MessageBoxButtons.OK);
             }
