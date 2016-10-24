@@ -15,7 +15,6 @@ namespace Request
         {
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(URL);
             ASCIIEncoding encoding = new ASCIIEncoding();
-
             request.Method = "GET";
             request.UseDefaultCredentials = true;
             request.ContentType = "text/xml; charset=utf-8";

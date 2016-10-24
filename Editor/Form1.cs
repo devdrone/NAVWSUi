@@ -53,9 +53,13 @@ namespace Editor
             if (result == DialogResult.OK)
             {
                 var str = openfile.FileName.Substring(0, openfile.FileName.LastIndexOf("\\"));
+                int pos = str.LastIndexOf("\\") + 1;
+                var FileName = str.Substring(pos, str.Length - pos);
+                TreeNode Node = treeView1.Nodes.Add(FileName);
                 foreach (var file in Directory.GetFiles(str, "*.navwsui"))
                 {
-
+                    TreeNode Services = new TreeNode();
+                    var str1 = file.Substring(0, file.LastIndexOf("\\"));
                 }
             }
         }

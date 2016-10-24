@@ -13,6 +13,7 @@ using Request;
 using Services;
 using System.Xml;
 using System.IO;
+using System.Diagnostics;
 
 namespace Editor
 {
@@ -108,7 +109,7 @@ namespace Editor
                         },
                     Credentials = new NetworkCredential(userName.Text, password.Text)
                 };
-
+                
                 var responsestring = client.UploadString(serviceUrl.ToString(), getNavCompany);
 
                 XElement result = XElement.Parse(responsestring);
@@ -156,7 +157,7 @@ namespace Editor
 
             string CompanyUrl = company.Text.Replace(" ", "%20");
 
-            GeneralURL = string.Format("http://{0}:{1}/{2}/WS/{3}", serverName.Text, soapPort.Text, instanceName.Text, CompanyUrl);
+            GeneralURL = string.Format("https://{0}:{1}/{2}/WS/{3}", serverName.Text, soapPort.Text, instanceName.Text, CompanyUrl);
 
             XmlDocument doc = new XmlDocument();
 
