@@ -64,9 +64,8 @@
       <HintPath>..\..\FastColoredTextBox\FastColoredTextBox\bin\Debug\FastColoredTextBox.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Dynamics.Nav.Types">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft Dynamics NAV\70\RoleTailored Client\Microsoft.Dynamics.Nav.Types.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft Dynamics NAV\90\RoleTailored Client\Microsoft.Dynamics.Nav.Types.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
