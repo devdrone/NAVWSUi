@@ -98,7 +98,7 @@ namespace Editor
             URL = OperationFile.Element("URL").Value;
 
             XElement soapBody = OperationFile.Element(ns + operation);
-            var request = soap.sopaBody(ns, soapBody).ToString();
+            var request = soap.SopaBody(ns, soapBody).ToString();
 
             RequestBox.Text = request;
         }

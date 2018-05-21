@@ -64,7 +64,7 @@
       <HintPath>..\..\FastColoredTextBox\FastColoredTextBox\bin\Debug\FastColoredTextBox.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Dynamics.Nav.Types">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft Dynamics NAV\90\RoleTailored Client\Microsoft.Dynamics.Nav.Types.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft Dynamics NAV\100\RoleTailored Client\Microsoft.Dynamics.Nav.Types.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

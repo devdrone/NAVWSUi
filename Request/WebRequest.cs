@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using System.Net;
 using System.IO;
 using System.Xml.Linq;
@@ -13,7 +9,7 @@ namespace Request
     {
         public string Resopnse(string URL)
         {
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(URL);
+            HttpWebRequest request = (HttpWebRequest)System.Net.WebRequest.Create(URL);
             ASCIIEncoding encoding = new ASCIIEncoding();
             request.Method = "GET";
             request.UseDefaultCredentials = true;
@@ -32,7 +28,7 @@ namespace Request
         public XElement Request(string soaprequest, string soapAction, string URL)
         {
             var header = string.Format("SOAPAction:\"{0}\"", soapAction);
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(URL);
+            HttpWebRequest request = (HttpWebRequest)System.Net.WebRequest.Create(URL);
             ASCIIEncoding encoding = new ASCIIEncoding();
             byte[] bytesToWrite = encoding.GetBytes(soaprequest);
 
