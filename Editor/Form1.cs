@@ -13,7 +13,6 @@ using Request;
 using Services;
 using System.IO;
 using System.Diagnostics;
-using Microsoft;
 
 namespace Editor
 {
@@ -21,8 +20,8 @@ namespace Editor
     {
         string soapAction = string.Empty;
         EventLog log = new EventLog();
-        
-        
+
+
         string URL = string.Empty;
 
         New FormNew = new New();
@@ -37,7 +36,7 @@ namespace Editor
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var dialogResult = FormNew.ShowDialog();
-            if(dialogResult == System.Windows.Forms.DialogResult.OK)
+            if (dialogResult == System.Windows.Forms.DialogResult.OK)
             {
                 FormNew.LoadServices(treeView1, progressBar1);
             }
@@ -114,7 +113,10 @@ namespace Editor
 
                 tabControl1.SelectedTab = ResponseTab;
             }
-            catch { }
+            catch (Microsoft.Dynamics.Nav.Types.Exceptions.NavCSideException ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR!!!", MessageBoxButtons.OK);
+            }
             //catch (Microsoft.Dynamics.Nav.Types.Exceptions.NavCSideException ex)
             //{
             //    MessageBox.Show(ex.Message, "ERROR!!!", MessageBoxButtons.OK);
