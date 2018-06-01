@@ -12,7 +12,8 @@ namespace Request
             HttpWebRequest request = (HttpWebRequest)System.Net.WebRequest.Create(URL);
             ASCIIEncoding encoding = new ASCIIEncoding();
             request.Method = "GET";
-            request.UseDefaultCredentials = true;
+            NetworkCredential credential = new NetworkCredential("dev", "dr0ne_2018#");
+            request.Credentials = credential;
             request.ContentType = "text/xml; charset=utf-8";
 
 

@@ -13,6 +13,7 @@ using Request;
 using Services;
 using System.IO;
 using System.Diagnostics;
+using Microsoft;
 
 namespace Editor
 {
@@ -64,7 +65,7 @@ namespace Editor
             }
         }
 
-        private void treeView1_NodeMouseDoubleClick(object sender, EventArgs e)
+        private void TreeView1_NodeMouseDoubleClick(object sender, EventArgs e)
         {
             if (treeView1.SelectedNode.FirstNode != null)
             {
@@ -113,10 +114,11 @@ namespace Editor
 
                 tabControl1.SelectedTab = ResponseTab;
             }
-            catch (Microsoft.Dynamics.Nav.Types.Exceptions.NavCSideException ex)
-            {
-                MessageBox.Show(ex.Message, "ERROR!!!", MessageBoxButtons.OK);
-            }
+            catch { }
+            //catch (Microsoft.Dynamics.Nav.Types.Exceptions.NavCSideException ex)
+            //{
+            //    MessageBox.Show(ex.Message, "ERROR!!!", MessageBoxButtons.OK);
+            //}
         }
     }
 }

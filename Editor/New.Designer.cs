@@ -62,6 +62,7 @@
             // 
             // domain
             // 
+            this.domain.BackColor = System.Drawing.Color.White;
             this.domain.Location = new System.Drawing.Point(105, 196);
             this.domain.Name = "domain";
             this.domain.Size = new System.Drawing.Size(183, 20);
@@ -109,7 +110,7 @@
             this.soapPort.Name = "soapPort";
             this.soapPort.Size = new System.Drawing.Size(183, 20);
             this.soapPort.TabIndex = 43;
-            this.soapPort.Text = "7047";
+            this.soapPort.Text = "8703";
             // 
             // instanceName
             // 
@@ -117,7 +118,7 @@
             this.instanceName.Name = "instanceName";
             this.instanceName.Size = new System.Drawing.Size(183, 20);
             this.instanceName.TabIndex = 42;
-            this.instanceName.Text = "dynamicsnav70";
+            this.instanceName.Text = "nav2017drone";
             // 
             // label3
             // 
@@ -153,7 +154,7 @@
             this.password.PasswordChar = '*';
             this.password.Size = new System.Drawing.Size(183, 20);
             this.password.TabIndex = 38;
-            this.password.Text = "devdrone";
+            this.password.Text = "dr0ne_2018#";
             this.password.UseSystemPasswordChar = true;
             // 
             // userName
@@ -162,7 +163,7 @@
             this.userName.Name = "userName";
             this.userName.Size = new System.Drawing.Size(183, 20);
             this.userName.TabIndex = 37;
-            this.userName.Text = "devdrone";
+            this.userName.Text = "dev";
             // 
             // serverName
             // 
@@ -170,7 +171,7 @@
             this.serverName.Name = "serverName";
             this.serverName.Size = new System.Drawing.Size(183, 20);
             this.serverName.TabIndex = 36;
-            this.serverName.Text = "localhost";
+            this.serverName.Text = "NAV-SRV3";
             // 
             // button1
             // 

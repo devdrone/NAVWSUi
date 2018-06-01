@@ -107,7 +107,7 @@
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(200, 457);
             this.treeView1.TabIndex = 2;
-            this.treeView1.NodeMouseDoubleClick+=treeView1_NodeMouseDoubleClick;
+            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView1_NodeMouseDoubleClick);
             // 
             // progressBar1
             // 
@@ -163,7 +163,6 @@
             this.RequestBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.RequestBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.RequestBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.RequestBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.RequestBox.IsReplaceMode = false;
             this.RequestBox.Language = FastColoredTextBoxNS.Language.XML;
             this.RequestBox.LeftBracket = '<';
@@ -186,7 +185,7 @@
             this.ResponseTab.Location = new System.Drawing.Point(4, 22);
             this.ResponseTab.Name = "ResponseTab";
             this.ResponseTab.Padding = new System.Windows.Forms.Padding(3);
-            this.ResponseTab.Size = new System.Drawing.Size(874, 421);
+            this.ResponseTab.Size = new System.Drawing.Size(807, 421);
             this.ResponseTab.TabIndex = 1;
             this.ResponseTab.Text = "Response";
             this.ResponseTab.UseVisualStyleBackColor = true;
@@ -213,6 +212,7 @@
             this.ResponseBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.ResponseBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.ResponseBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ResponseBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.ResponseBox.IsReplaceMode = false;
             this.ResponseBox.Language = FastColoredTextBoxNS.Language.XML;
             this.ResponseBox.LeftBracket = '<';
@@ -224,7 +224,7 @@
             this.ResponseBox.RightBracket2 = ')';
             this.ResponseBox.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.ResponseBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("ResponseBox.ServiceColors")));
-            this.ResponseBox.Size = new System.Drawing.Size(868, 415);
+            this.ResponseBox.Size = new System.Drawing.Size(801, 415);
             this.ResponseBox.TabIndex = 0;
             this.ResponseBox.WordWrap = true;
             this.ResponseBox.Zoom = 100;
@@ -237,7 +237,6 @@
             this.SubmitButton.TabIndex = 5;
             this.SubmitButton.Text = "Submit";
             this.SubmitButton.UseVisualStyleBackColor = true;
-            this.SubmitButton.Click+=SubmitButton_Click;
             // 
             // Form1
             // 
@@ -263,7 +262,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ResponseBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-            //this.FormNew.Deactivate+=FormNew_Deactivate;
+
         }
 
         #endregion
