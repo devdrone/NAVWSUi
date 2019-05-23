@@ -163,6 +163,7 @@
             this.RequestBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.RequestBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.RequestBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.RequestBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.RequestBox.IsReplaceMode = false;
             this.RequestBox.Language = FastColoredTextBoxNS.Language.XML;
             this.RequestBox.LeftBracket = '<';
@@ -212,7 +213,6 @@
             this.ResponseBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.ResponseBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.ResponseBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ResponseBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.ResponseBox.IsReplaceMode = false;
             this.ResponseBox.Language = FastColoredTextBoxNS.Language.XML;
             this.ResponseBox.LeftBracket = '<';
@@ -237,6 +237,7 @@
             this.SubmitButton.TabIndex = 5;
             this.SubmitButton.Text = "Submit";
             this.SubmitButton.UseVisualStyleBackColor = true;
+            this.SubmitButton.Click += new System.EventHandler(this.SubmitButton_Click_1);
             // 
             // Form1
             // 

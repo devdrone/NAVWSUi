@@ -1,0 +1,322 @@
+OBJECT Codeunit 50018 File Download Management
+{
+  OBJECT-PROPERTIES
+  {
+    Date=20.01.12;
+    Time=09:48:06;
+    Modified=Yes;
+    Version List=Dynamics.is;
+  }
+  PROPERTIES
+  {
+    OnRun=BEGIN
+          END;
+
+  }
+  CODE
+  {
+    VAR
+      Text012@1200050023 : TextConst 'ENU=Downloading %1;ISL=Hle– ni–ur %1';
+      Text013@1200050022 : TextConst 'ENU=Status error %1 %2;ISL=Stî–uvilla %1 %2';
+      Text016@1200050003 : TextConst 'ENU=Download and import %1 ?;ISL=Hla–a ni–ur og lesa inn %1 ?';
+      Text017@1200050002 : TextConst 'ENU=New Records      #2#######;ISL=NÏjar fërslur    #2#######';
+      Text018@1200050001 : TextConst 'ENU=Modified Records #3#######;ISL=Breyttar fërslur #3#######';
+      Text019@1200050000 : TextConst 'ENU=Reading %1;ISL=Les %1';
+      WinHTTP@1200050019 : Automation "{F5078F18-C551-11D3-89B9-0000F81FE221} 6.0:{F6D90F16-9C73-11D3-B32E-00C04F990BB4}:'Microsoft XML, v6.0'.XMLHTTP" WITHEVENTS;
+      SystemShellFilesSystem@1200050018 : Automation "{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B} 1.0:{0D43FE01-F093-11CF-8940-00A0C9054228}:'Windows Script Host Object Model'.FileSystemObject";
+      SystemShellFolder@1200050017 : Automation "{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B} 1.0:{C7C3F5B3-88A3-11D0-ABCB-00A0C90FFFC0}:'Windows Script Host Object Model'.Folder";
+      SystemShellFiles@1200050016 : Automation "{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B} 1.0:{C7C3F5B6-88A3-11D0-ABCB-00A0C90FFFC0}:'Windows Script Host Object Model'.Files";
+      SystemShellFile@1200050015 : Automation "{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B} 1.0:{C7C3F5B5-88A3-11D0-ABCB-00A0C90FFFC0}:'Windows Script Host Object Model'.File";
+      SystemNetwork@1200050014 : Automation "{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B} 1.0:{093FF999-1EA0-4079-9525-9614C3504B74}:'Windows Script Host Object Model'.WshNetwork";
+      SystemShell@1200050013 : Automation "{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B} 1.0:{72C24DD5-D70A-438B-8A42-98424B88AFB8}:'Windows Script Host Object Model'.WshShell";
+      SystemEnviroment@1200050012 : Automation "{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B} 1.0:{F48229AF-E28C-42B5-BB92-E114E62BDD54}:'Windows Script Host Object Model'.WshEnvironment";
+      SystemShellControl@1200050011 : Automation "{50A7E9B0-70EF-11D1-B75A-00A0C90564FE} 1.0:{13709620-C279-11CE-A49E-444553540000}:'Microsoft Shell Controls And Automation'.Shell";
+      SystemShellItem@1200050010 : Automation "{50A7E9B0-70EF-11D1-B75A-00A0C90564FE} 1.0:{FAC32C80-CBE4-11CE-8350-444553540000}:'Microsoft Shell Controls And Automation'.FolderItem";
+      SystemShellItems@1200050009 : Automation "{50A7E9B0-70EF-11D1-B75A-00A0C90564FE} 1.0:{744129E0-CBE5-11CE-8350-444553540000}:'Microsoft Shell Controls And Automation'.FolderItems";
+      HTTPRequest@1200050008 : DotNet "'Microsoft.MSXML, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.MSXML.XMLHTTPRequestClass" RUNONCLIENT;
+      ClientFile@1200050007 : DotNet "'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.File" RUNONCLIENT;
+      StreamWriter@1200050006 : DotNet "'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'.System.IO.StreamWriter" RUNONCLIENT;
+      TempFile@1200050005 : File;
+      ThreeTier@1200050004 : Codeunit 419;
+      Window@1200050021 : Dialog;
+      WindowLastUpdated@1200050020 : DateTime;
+      Text024@1200050024 : TextConst 'ENU=Executing %1 to get file;ISL=Keyri %1 til a– sëkja skr†';
+
+    PROCEDURE DownloadTextFile@1200050000(URL@1200050000 : Text[1024];ConvertCP@1200050005 : Boolean);
+    VAR
+      TempBlob@1200050001 : TEMPORARY Record 99008535;
+      TempText@1200050004 : BigText;
+      OutStr@1200050003 : OutStream;
+      InStr@1200050002 : InStream;
+    BEGIN
+      IF URL = '' THEN EXIT;
+
+      IF NOT CONFIRM(Text016,TRUE,URL) THEN EXIT;
+
+      IF GUIALLOWED THEN BEGIN
+        Window.OPEN('#1#############################################\\' + Text017 + '\' + Text018);
+        Window.UPDATE(1,STRSUBSTNO(Text012,URL));
+      END;
+
+      IF ISSERVICETIER THEN BEGIN
+        HTTPRequest := HTTPRequest.XMLHTTPRequestClass;
+        HTTPRequest.open('GET',URL,FALSE,'','');
+        HTTPRequest.send('');
+        IF HTTPRequest.status <> 200 THEN
+          ERROR(Text013,HTTPRequest.status,HTTPRequest.statusText);
+        TempText.ADDTEXT(HTTPRequest.responseText);
+        TempBlob.Blob.CREATEOUTSTREAM(OutStr);
+        TempText.WRITE(OutStr);
+      END ELSE BEGIN
+        CREATE(WinHTTP,TRUE,TRUE);
+
+        WinHTTP.open('GET',URL,FALSE);
+        WinHTTP.send('');
+
+        IF WinHTTP.status <> 200 THEN
+          ERROR(Text013,WinHTTP.status,WinHTTP.statusText);
+
+        TempBlob.Blob.CREATEOUTSTREAM(OutStr);
+        InStr := WinHTTP.responseStream;
+        COPYSTREAM(OutStr,InStr);
+        CLEAR(WinHTTP);
+      END;
+      TempBlob.Blob.CREATEINSTREAM(InStr);
+      IF GUIALLOWED THEN
+        Window.UPDATE(1,STRSUBSTNO(Text019,URL));
+      //ReadTextStream(InStr,ConvertCP);
+      IF GUIALLOWED THEN
+        Window.CLOSE;
+    END;
+
+    PROCEDURE DownloadZipFile@1200050001(URL@1200050001 : Text[1024];ConvertCP@1200050000 : Boolean);
+    VAR
+      TempBlob@1200050011 : TEMPORARY Record 99008535;
+      TempFile@1200050005 : File;
+      TempFileName@1200050008 : Text[1024];
+      TempFolderName@1200050003 : Text[1024];
+      FileName@1200050002 : Text[1024];
+      TempText@1200050010 : BigText;
+      Index@1200050004 : Integer;
+      Pos@1200050009 : Integer;
+      OutStr@1200050007 : OutStream;
+      InStr@1200050006 : InStream;
+    BEGIN
+      IF URL = '' THEN EXIT;
+
+      IF NOT CONFIRM(Text016,TRUE,URL) THEN EXIT;
+
+      IF GUIALLOWED THEN BEGIN
+        Window.OPEN('#1#############################################\\' + Text017 + '\' + Text018);
+        Window.UPDATE(1,STRSUBSTNO(Text012,URL));
+      END;
+
+      IF ISSERVICETIER THEN BEGIN
+        HTTPRequest := HTTPRequest.XMLHTTPRequestClass;
+        HTTPRequest.open('GET',URL,FALSE,'','');
+        HTTPRequest.send('');
+        IF HTTPRequest.status <> 200 THEN
+          ERROR(Text013,HTTPRequest.status,HTTPRequest.statusText);
+
+      END ELSE BEGIN
+        CREATE(WinHTTP,TRUE,TRUE);
+
+        WinHTTP.open('GET',URL,FALSE);
+        WinHTTP.send('');
+
+        IF WinHTTP.status <> 200 THEN
+          ERROR(Text013,WinHTTP.status,WinHTTP.statusText);
+      END;
+
+      IF ISCLEAR(SystemShellFilesSystem) THEN
+        CREATE(SystemShellFilesSystem,TRUE,TRUE);
+      IF ISCLEAR(SystemShellControl) THEN
+        CREATE(SystemShellControl,TRUE,TRUE);
+
+      TempFolderName := GetTempPath;
+      TempFileName := TempFolderName + '\NAV_NR.ZIP';
+      TempFolderName := TempFolderName + '\NAV_NR';
+      IF SystemShellFilesSystem.FolderExists(TempFolderName) THEN BEGIN
+        SystemShellFilesSystem.DeleteFolder(TempFolderName,TRUE);
+        SLEEP(100);
+      END;
+
+      SystemShellFilesSystem.CreateFolder(TempFolderName);
+      IF SystemShellFilesSystem.FileExists(TempFileName) THEN
+        SystemShellFilesSystem.DeleteFile(TempFileName);
+
+      IF ISSERVICETIER THEN BEGIN
+        ClientFile.WriteAllBytes(TempFileName,HTTPRequest.responseBody);
+      END ELSE BEGIN
+        TempFile.CREATE(TempFileName);
+        TempFile.CREATEOUTSTREAM(OutStr);
+        InStr := WinHTTP.responseStream;
+        COPYSTREAM(OutStr,InStr);
+        TempFile.CLOSE;
+      END;
+
+      SystemShellItems := SystemShellControl.NameSpace(TempFileName).Items;
+      SystemShellControl.NameSpace(TempFolderName).CopyHere(SystemShellItems);
+      FOR Index := 1 TO SystemShellItems.Count DO BEGIN
+        SystemShellItem := SystemShellItems.Item(Index - 1);
+        FileName := RemovePath(SystemShellItem.Path);
+        IF ISSERVICETIER THEN BEGIN
+          TempText.ADDTEXT(ClientFile.ReadAllText(TempFolderName + '\' + FileName));
+          TempBlob.Blob.CREATEOUTSTREAM(OutStr);
+          TempText.WRITE(OutStr);
+          TempBlob.Blob.CREATEINSTREAM(InStr);
+        END ELSE BEGIN
+          TempFile.OPEN(TempFolderName + '\' + FileName);
+          TempFile.CREATEINSTREAM(InStr);
+        END;
+        IF GUIALLOWED THEN
+          Window.UPDATE(1,STRSUBSTNO(Text019,FileName));
+      //  ReadTextStream(InStr,ConvertCP);
+        IF NOT ISSERVICETIER THEN
+          TempFile.CLOSE;
+        SystemShellFilesSystem.DeleteFile(TempFolderName + '\' + FileName);
+      END;
+
+      IF SystemShellFilesSystem.FileExists(TempFileName) THEN
+        SystemShellFilesSystem.DeleteFile(TempFileName);
+      IF SystemShellFilesSystem.FolderExists(TempFolderName) THEN
+        SystemShellFilesSystem.DeleteFolder(TempFolderName,TRUE);
+
+      CLEAR(WinHTTP);
+      CLEAR(SystemShellFilesSystem);
+      CLEAR(SystemShellControl);
+      IF GUIALLOWED THEN
+        Window.CLOSE;
+    END;
+
+    PROCEDURE DownloadFtpFile@1200050008(Host@1200050000 : Code[15];UserID@1200050001 : Text[30];Password@1200050002 : Text[30];FileName@1200050003 : Text[30];ConvertCP@1200050010 : Boolean);
+    VAR
+      TempBlob@1200050012 : TEMPORARY Record 99008535;
+      TempText@1200050011 : BigText;
+      TempFileName@1200050005 : Text[1024];
+      CommandFileName@1200050006 : Text[1024];
+      QueryFileName@1200050004 : Text[1024];
+      WaitOnReturn@1200050007 : Boolean;
+      WindowType@1200050008 : Integer;
+      OutStr@1200050013 : OutStream;
+      InStr@1200050009 : InStream;
+    BEGIN
+      IF NOT CONFIRM(Text016,TRUE,FileName) THEN EXIT;
+
+      IF GUIALLOWED THEN
+        Window.OPEN('#1##################################################\\' + Text017 + '\' + Text018);
+
+      IF ISCLEAR(SystemShell) THEN
+        CREATE(SystemShell,TRUE,TRUE);
+      IF ISCLEAR(SystemShellFilesSystem) THEN
+        CREATE(SystemShellFilesSystem,TRUE,TRUE);
+
+      TempFileName := GetTempPath + '\nrdata.txt';
+      CommandFileName := GetTempPath + '\nrdata.cmd';
+      QueryFileName := GetTempPath + '\nrdata.ftp';
+
+      IF SystemShellFilesSystem.FileExists(TempFileName) THEN
+        SystemShellFilesSystem.DeleteFile(TempFileName);
+      IF SystemShellFilesSystem.FileExists(CommandFileName) THEN
+        SystemShellFilesSystem.DeleteFile(CommandFileName);
+      IF SystemShellFilesSystem.FileExists(QueryFileName) THEN
+        SystemShellFilesSystem.DeleteFile(QueryFileName);
+
+      IF GUIALLOWED THEN
+        Window.UPDATE(1,STRSUBSTNO(Text024,CommandFileName));
+
+      IF ISSERVICETIER THEN BEGIN
+        StreamWriter := ClientFile.CreateText(QueryFileName);
+        StreamWriter.WriteLine('open ' + Host);
+        StreamWriter.WriteLine(UserID);
+        StreamWriter.WriteLine(Password);
+        StreamWriter.WriteLine('get "' + FileName + '" "' + TempFileName + '"');
+        StreamWriter.WriteLine('bye');
+        StreamWriter.Close;
+
+        StreamWriter := ClientFile.CreateText(CommandFileName);
+        StreamWriter.WriteLine('ftp -s:"' + QueryFileName + '"');
+        StreamWriter.Close;
+      END ELSE BEGIN
+        TempFile.TEXTMODE(TRUE);
+        TempFile.CREATE(QueryFileName);
+        TempFile.WRITE('open ' + Host);
+        TempFile.WRITE(UserID);
+        TempFile.WRITE(Password);
+        TempFile.WRITE('get "' + FileName + '" "' + TempFileName + '"');
+        TempFile.WRITE('bye');
+        TempFile.CLOSE;
+
+        TempFile.TEXTMODE(TRUE);
+        TempFile.CREATE(CommandFileName);
+        TempFile.WRITE('ftp -s:"' + QueryFileName + '"');
+        TempFile.CLOSE;
+      END;
+
+      WaitOnReturn := TRUE;
+      IF GUIALLOWED THEN
+        WindowType := 1
+      ELSE
+        WindowType := 0;
+
+      SystemShell.Run(CommandFileName,WindowType,WaitOnReturn);
+      SLEEP(1000);
+      SystemShellFilesSystem.DeleteFile(CommandFileName);
+      SystemShellFilesSystem.DeleteFile(QueryFileName);
+
+      IF ISSERVICETIER THEN BEGIN
+        TempText.ADDTEXT(ClientFile.ReadAllText(TempFileName));
+        TempBlob.Blob.CREATEOUTSTREAM(OutStr);
+        TempText.WRITE(OutStr);
+        TempBlob.Blob.CREATEINSTREAM(InStr);
+      END ELSE BEGIN
+        TempFile.OPEN(TempFileName);
+        TempFile.CREATEINSTREAM(InStr);
+      END;
+      IF GUIALLOWED THEN
+        Window.UPDATE(1,STRSUBSTNO(Text019,TempFileName));
+      //ReadTextStream(InStr,ConvertCP);
+      IF NOT ISSERVICETIER THEN
+        TempFile.CLOSE;
+      SystemShellFilesSystem.DeleteFile(TempFileName);
+      IF GUIALLOWED THEN
+        Window.CLOSE;
+
+      CLEAR(SystemShellFilesSystem);
+      CLEAR(SystemShell);
+    END;
+
+    LOCAL PROCEDURE ExtractPath@1200050007(FileName@1200050000 : Text[1024]) FolderPath : Text[1024];
+    VAR
+      BackSlashPos@1200050001 : Integer;
+    BEGIN
+      FOR BackSlashPos := 1 TO STRLEN(FileName) DO
+        IF COPYSTR(FileName,BackSlashPos,1) = '\' THEN
+          FolderPath := COPYSTR(FileName,1,BackSlashPos);
+    END;
+
+    LOCAL PROCEDURE RemovePath@1200050006(FileName@1200050000 : Text[1024]) NewFileName : Text[1024];
+    VAR
+      BackSlashPos@1200050001 : Integer;
+    BEGIN
+      FOR BackSlashPos := 1 TO STRLEN(FileName) DO
+        IF COPYSTR(FileName,BackSlashPos,1) = '\' THEN
+          NewFileName := COPYSTR(FileName,BackSlashPos + 1);
+    END;
+
+    LOCAL PROCEDURE GetTempPath@1200050010() TempPath : Text[1024];
+    VAR
+      EnviormentPath@1200050000 : Code[50];
+    BEGIN
+      IF ISCLEAR(SystemShell) THEN
+        CREATE(SystemShell,TRUE,TRUE);
+      EnviormentPath := 'PROCESS';
+      SystemEnviroment := SystemShell.Environment(EnviormentPath);
+      TempPath := SystemEnviroment.Item('TEMP')
+    END;
+
+    BEGIN
+    END.
+  }
+}
+

@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Linq;
-using System.Net;
-using Request;
-using Services;
-using System.Xml;
 using System.IO;
-using System.Diagnostics;
+using System.Linq;
+using System.Net;
+using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Linq;
+using Services;
 
 namespace Editor
 {
@@ -110,9 +103,10 @@ namespace Editor
                     Credentials = new NetworkCredential(userName.Text, password.Text)
                 };
 
-                var responsestring = client.UploadString(serviceUrl.ToString(), getNavCompany);
+                //var responsestring = client.UploadString(serviceUrl.ToString(), getNavCompany);
+                var responsestring = WEB.Request(getNavCompany, "", serviceUrl.ToString());
 
-                XElement result = XElement.Parse(responsestring);
+                XElement result = XElement.Parse(responsestring.ToString());
                 if (result.Descendants(nsSys + "return_value").Any())
                 {
                     foreach (var Company in result.Descendants(nsSys + "return_value"))
@@ -156,7 +150,7 @@ namespace Editor
             Directory.CreateDirectory(location.Text + "\\" + ProjName.Text);
 
             string CompanyUrl = company.Text.Replace(" ", "%20");
-            
+
             GeneralURL = string.Format("http://{0}:{1}/{2}/WS/{3}", serverName.Text, soapPort.Text, instanceName.Text, CompanyUrl);
 
             XmlDocument doc = new XmlDocument();
@@ -270,6 +264,11 @@ namespace Editor
         {
             string path = location.Text + "\\" + ProjName.Text;
             return path;
+        }
+
+        private void company_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

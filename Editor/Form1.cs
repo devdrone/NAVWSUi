@@ -122,5 +122,10 @@ namespace Editor
             //    MessageBox.Show(ex.Message, "ERROR!!!", MessageBoxButtons.OK);
             //}
         }
+
+        private void SubmitButton_Click_1(object sender, EventArgs e)
+        {
+            LoadResponse();
+        }
     }
 }

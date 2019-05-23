@@ -78,7 +78,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="TabStrip">
-      <HintPath>..\..\FastColoredTextBox\Tester\bin\Debug\TabStrip.dll</HintPath>
+      <HintPath>..\..\FastColoredTextBox\Tester\TabStrip.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

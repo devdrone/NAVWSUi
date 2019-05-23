@@ -2,6 +2,7 @@
 using System.Net;
 using System.IO;
 using System.Xml.Linq;
+using System.Windows.Forms;
 
 namespace Request
 {
@@ -12,7 +13,7 @@ namespace Request
             HttpWebRequest request = (HttpWebRequest)System.Net.WebRequest.Create(URL);
             ASCIIEncoding encoding = new ASCIIEncoding();
             request.Method = "GET";
-            NetworkCredential credential = new NetworkCredential("dev", "dr0ne_2018#");
+            NetworkCredential credential = new NetworkCredential("admin", "admin");
             request.Credentials = credential;
             request.ContentType = "text/xml; charset=utf-8";
 
@@ -30,13 +31,16 @@ namespace Request
         {
             var header = string.Format("SOAPAction:\"{0}\"", soapAction);
             HttpWebRequest request = (HttpWebRequest)System.Net.WebRequest.Create(URL);
+            MessageBox.Show(request.Address.AbsoluteUri);
             ASCIIEncoding encoding = new ASCIIEncoding();
             byte[] bytesToWrite = encoding.GetBytes(soaprequest);
 
             request.Method = "POST";
             request.ContentLength = bytesToWrite.Length;
             request.Headers.Add(header);
-            request.UseDefaultCredentials = true;
+            //request.UseDefaultCredentials = true;
+            NetworkCredential credential = new NetworkCredential("admin", "admin");
+            request.Credentials = credential;
             request.ContentType = "text/xml; charset=utf-8";
 
             Stream newStream = request.GetRequestStream();
