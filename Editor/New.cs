@@ -104,7 +104,7 @@ namespace Editor
                 };
 
                 //var responsestring = client.UploadString(serviceUrl.ToString(), getNavCompany);
-                var responsestring = WEB.Request(getNavCompany, "", serviceUrl.ToString());
+                var responsestring = WEB.Request(getNavCompany, "", serviceUrl.ToString(), userName.Text, password.Text);
 
                 XElement result = XElement.Parse(responsestring.ToString());
                 if (result.Descendants(nsSys + "return_value").Any())
@@ -160,7 +160,7 @@ namespace Editor
             XElement root = new XElement("Root",
                 new XElement("operations"));
 
-            var Urls = XElement.Parse(WEB.Resopnse(serviceUrl));
+            var Urls = XElement.Parse(WEB.Resopnse(serviceUrl, userName.Text, password.Text));
             foreach (XElement url in Urls.Elements())
             {
                 var webserviceURL = url.Attribute("ref").Value;
@@ -173,7 +173,7 @@ namespace Editor
 
                     string filelocation = location.Text + "\\" + ProjName.Text + "\\" + FileName;
 
-                    var WebService = WEB.Resopnse(webserviceURL);
+                    var WebService = WEB.Resopnse(webserviceURL, userName.Text, password.Text);
                     navWs.WebServiceReader(WebService, filelocation);
                 }
             }
@@ -197,7 +197,7 @@ namespace Editor
 
         public string GetCredentialFile()
         {
-            string Destination = location.Text + "\\" + ProjName.Text + ".credentials";
+            string Destination = location.Text + "\\" + ProjName.Text + "\\" + ProjName.Text + ".credentials";
             return Destination;
         }
 
@@ -223,7 +223,7 @@ namespace Editor
                     var credentials = XElement.Parse(credentialDoc.InnerXml);
                     var serviceUrl = string.Format("{0}/{1}", credentials.Element("URL").Value, "Services");
 
-                    var Urls = XElement.Parse(WEB.Resopnse(serviceUrl));
+                    var Urls = XElement.Parse(WEB.Resopnse(serviceUrl, userName.Text, password.Text));
 
                     progressbarMain.Minimum = 0;
                     progressbarMain.Maximum = Urls.Elements().Count();

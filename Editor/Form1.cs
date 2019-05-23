@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using Request;
 using Services;
-using System.IO;
-using System.Diagnostics;
 
 namespace Editor
 {
@@ -27,6 +20,8 @@ namespace Editor
         New FormNew = new New();
 
         SOAPBuilder soap = new SOAPBuilder();
+        private string UserName;
+        private string Password;
 
         public Form1()
         {
@@ -109,7 +104,7 @@ namespace Editor
 
             try
             {
-                ResponseBox.Text = req.Request(RequestBox.Text, soapAction, URL).ToString();
+                ResponseBox.Text = req.Request(RequestBox.Text, soapAction, URL, UserName, Password).ToString();
 
                 tabControl1.SelectedTab = ResponseTab;
             }
@@ -125,7 +120,17 @@ namespace Editor
 
         private void SubmitButton_Click_1(object sender, EventArgs e)
         {
+            GetCredentials();
             LoadResponse();
+        }
+
+        private void GetCredentials()
+        {
+            string path = FormNew.GetCredentialFile();
+            var credentialFile = XElement.Load(path);
+
+            UserName = credentialFile.Element("UserName").Value;
+            Password = credentialFile.Element("password").Value;
         }
     }
 }

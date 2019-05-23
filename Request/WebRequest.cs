@@ -1,19 +1,19 @@
-﻿using System.Text;
+﻿using System.IO;
 using System.Net;
-using System.IO;
-using System.Xml.Linq;
+using System.Text;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace Request
 {
     public class WebRequest
     {
-        public string Resopnse(string URL)
+        public string Resopnse(string URL, string username, string password)
         {
             HttpWebRequest request = (HttpWebRequest)System.Net.WebRequest.Create(URL);
             ASCIIEncoding encoding = new ASCIIEncoding();
             request.Method = "GET";
-            NetworkCredential credential = new NetworkCredential("admin", "admin");
+            NetworkCredential credential = new NetworkCredential(username, password);
             request.Credentials = credential;
             request.ContentType = "text/xml; charset=utf-8";
 
@@ -27,11 +27,10 @@ namespace Request
             return responseFromServer;
         }
 
-        public XElement Request(string soaprequest, string soapAction, string URL)
+        public XElement Request(string soaprequest, string soapAction, string URL, string username, string password)
         {
             var header = string.Format("SOAPAction:\"{0}\"", soapAction);
             HttpWebRequest request = (HttpWebRequest)System.Net.WebRequest.Create(URL);
-            MessageBox.Show(request.Address.AbsoluteUri);
             ASCIIEncoding encoding = new ASCIIEncoding();
             byte[] bytesToWrite = encoding.GetBytes(soaprequest);
 
@@ -39,7 +38,7 @@ namespace Request
             request.ContentLength = bytesToWrite.Length;
             request.Headers.Add(header);
             //request.UseDefaultCredentials = true;
-            NetworkCredential credential = new NetworkCredential("admin", "admin");
+            NetworkCredential credential = new NetworkCredential(username, password);
             request.Credentials = credential;
             request.ContentType = "text/xml; charset=utf-8";
 
